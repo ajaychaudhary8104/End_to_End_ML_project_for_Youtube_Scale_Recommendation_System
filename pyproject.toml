@@ -1,0 +1,127 @@
+[build-system]
+requires = [
+"setuptools>=69.0.0",
+"wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recommendation-system-platform"
+version = "0.1.0"
+description = "Production-grade Youtube-scale Recommendation System Synthetic Data Generation and MLOps Platform"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = "MIT"
+
+authors = [
+{ name = "Ajay Chaudhary" }
+]
+
+keywords = [
+"recommendation-system",
+"retrieval",
+"ranking",
+"reranking",
+"two-tower",
+"lightgcn",
+"sasrec",
+"bert4rec",
+"bandits",
+"reinforcement-learning",
+"feature-store",
+"mlops",
+"synthetic-data"
+]
+
+classifiers = [
+"Programming Language :: Python :: 3",
+"Programming Language :: Python :: 3.11",
+"Operating System :: OS Independent",
+"Intended Audience :: Developers",
+"Intended Audience :: Science/Research",
+"Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+dynamic = ["dependencies"]
+
+[project.urls]
+Homepage = "https://github.com/ajaychaudhary8104"
+Repository = "https://github.com/ajaychaudhary8104/End_to_End_ML_project_for_Youtube_Scale_Recommendation_System"
+Issues = "https://github.com/ajaychaudhary8104/End_to_End_ML_project_for_Youtube_Scale_Recommendation_System/issues"
+
+[project.scripts]
+generate-data = "recommendation_system.orchestrator.recommendation_data_generator:main"
+train-models = "recommendation_system.orchestrator.training_pipeline:main"
+evaluate-models = "recommendation_system.orchestrator.evaluation_pipeline:main"
+serve-api = "recommendation_system.api.app:main"
+run-pipeline = "recommendation_system.orchestrator.master_orchestrator:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["recommendation_system*"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = [
+"E203",
+"W503"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+python_files = [
+"test_*.py"
+]
+
+python_classes = [
+"Test*"
+]
+
+python_functions = [
+"test_*"
+]
+
+addopts = [
+"--strict-markers",
+"--disable-warnings"
+]
+
+[tool.coverage.run]
+source = [
+"src/recommendation_system"
+]
+
+omit = [
+"tests/*"
+]
+
+[tool.coverage.report]
+show_missing = true
+
+exclude_lines = [
+"pragma: no cover",
+"if **name** == .**main**.:"
+]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+check_untyped_defs = true
